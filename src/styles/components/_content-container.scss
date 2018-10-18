@@ -1,5 +1,17 @@
 .content-container {
-  margin: 15rem auto 0 auto;
+  margin: 14rem auto 0 auto;
   padding: 0 $xl-size;
   max-width: 80rem;
+}
+
+@media only screen and (max-width: $tablet-breakpoint) {
+  .content-container {
+    margin-top: 6rem;
+  }
+}
+
+@media only screen and (max-width: $desktop-breakpoint) {
+  .content-container {
+    margin-top: 3rem;
+  }
 }

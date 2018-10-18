@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import VehicleInfoDialog from './VehicleInfoDialog';
+import { setVehicleInfo } from '../actions/vehicle';
 
 class VehicleInfo extends React.Component {
     constructor(props) {
@@ -44,15 +45,30 @@ class VehicleInfo extends React.Component {
                     discount,
                     rebate,
                     purchasePrice
-                }));
+                }))
+                return jsonData;
             })
+            .then((jsonData) => {
+                this.setVehicleInfo();
+            });
+    }
+
+    setVehicleInfo = () => {
+        const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
+        this.props.setVehicleInfo({
+            year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice
+        });
     }
 
     numberToDollarValue = (number) => {
         let input = number.toString();
-        let start = input.slice(0, input.length - 2);
-        let end = input.slice(input.length - 2);
-        return '$' + start + '.' + end;
+        if (input.length > 3) {
+            let start = input.slice(0, input.length - 3);
+            let end = input.slice(input.length - 3);
+            return '$' + start + ',' + end;
+        } else {
+            return '$' + input;
+        }
     }
 
     render() {
@@ -147,7 +163,13 @@ class VehicleInfo extends React.Component {
                         </div>
                     </div>
                     <div className='Vehicle-flexItemContainer'>
-                        <VehicleInfoDialog />
+                        <VehicleInfoDialog
+                            msrp={msrp}
+                            discount={discount}
+                            rebate={rebate}
+                            purchasePrice={purchasePrice}
+                            numberToDollarValue={this.numberToDollarValue}
+                        />
                     </div>
                 </div>
             </div>
@@ -167,4 +189,8 @@ const mapStateToProps = (state) => ({
     purchasePrice: state.vehicleInfo.purchasePrice
 });
 
-export default connect(mapStateToProps)(VehicleInfo);
+const mapDispatchToProps = (dispatch, props) => ({
+    setVehicleInfo: (vehicleInfo) => dispatch(setVehicleInfo(vehicleInfo))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleInfo);

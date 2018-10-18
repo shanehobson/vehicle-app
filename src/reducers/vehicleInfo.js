@@ -1,9 +1,13 @@
 const vehicleInfoDefaultState = {
-        vehicleYear: "",
-        vehicleModel: "",
-        modelNumber: "",
-        vin: "",
-        vehicleMake: ""
+    year: '',
+    make: '',
+    model: '',
+    vin: '',
+    modelNumber: '',
+    msrp: '',
+    discount: '',
+    rebate: '',
+    purchasePrice: ''
 };
 
 const vehicleInfoReducer = (state = vehicleInfoDefaultState, action) => {

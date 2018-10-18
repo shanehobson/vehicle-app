@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
 
 class FormDialog extends React.Component {
   state = {
@@ -21,6 +22,7 @@ class FormDialog extends React.Component {
   };
 
   render() {
+    const { msrp, rebate, discount, purchasePrice, numberToDollarValue } = this.props;
     return (
       <div>
         <Button
@@ -41,16 +43,44 @@ class FormDialog extends React.Component {
           >
           Edit Pricing Information</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Edit any of the fields below that you wish to change, and click "Submit" when done.
-            </DialogContentText>
+            <Typography variant='h6'>
+                Edit any of the fields below that you wish to change, and click "Submit" when done.
+            </Typography>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Email Address"
-              type="email"
+              label="MSRP"
+              type="text"
               fullWidth
+              value={numberToDollarValue(msrp)}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Discount"
+                type="text"
+                fullWidth
+                value={numberToDollarValue(discount)}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Rebate"
+                type="text"
+                fullWidth
+                value={numberToDollarValue(rebate)}
+            />
+            <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Purchase Price"
+                type="text"
+                fullWidth
+                value={numberToDollarValue(purchasePrice)}
             />
           </DialogContent>
           <DialogActions>
@@ -58,7 +88,7 @@ class FormDialog extends React.Component {
               Cancel
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Submit
             </Button>
           </DialogActions>
         </Dialog>

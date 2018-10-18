@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import VehicleInfoDialog from './VehicleInfoDialog';
 
 class VehicleInfo extends React.Component {
     constructor(props) {
@@ -26,22 +27,42 @@ class VehicleInfo extends React.Component {
 
     getVehicleInfo = () => {
         fetch('https://clearpathpro.io:9060/getVehicleInformation?userId=hobsonShane')
-            .then(function(response) {
+            .then((response) => {
                 console.log(response)
                 return response.json();
             })
-            .then(function(jsonData) {
-                console.log(JSON.stringify(jsonData));
+            .then((jsonData) => {
+                const { vehicleYear, vehicleMake, vehicleModel, vin, modelNumber } = jsonData.vehicleInfo;
+                const { rebate, msrp, discount, purchasePrice} = jsonData.vehiclePricing;
+                this.setState(() => ({
+                    year: vehicleYear,
+                    make: vehicleMake,
+                    model: vehicleModel,
+                    vin,
+                    modelNumber,
+                    msrp,
+                    discount,
+                    rebate,
+                    purchasePrice
+                }));
             })
     }
 
+    numberToDollarValue = (number) => {
+        let input = number.toString();
+        let start = input.slice(0, input.length - 2);
+        let end = input.slice(input.length - 2);
+        return '$' + start + '.' + end;
+    }
+
     render() {
+        const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
         return (
             <div className='Vehicle-container'>
                 <div className='Vehicle-leftPane'>
                     <div className='Vehicle-flexItemContainer'>
                         <Typography variant='display3' color='primary'>
-                            Year Make Model
+                            {year} {make} {model}
                         </Typography>
                     </div>
                     <div className='Vehicle-flexItemContainer'>
@@ -52,7 +73,7 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {vin}
                             </Typography>
                         </div>
                     </div>
@@ -64,7 +85,7 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {modelNumber}
                             </Typography>
                         </div>
                     </div>
@@ -85,7 +106,7 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {this.numberToDollarValue(msrp)}
                             </Typography>
                         </div>
                     </div>
@@ -97,7 +118,7 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {this.numberToDollarValue(discount)}
                             </Typography>
                         </div>
                     </div>
@@ -109,7 +130,7 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {this.numberToDollarValue(rebate)}
                             </Typography>
                         </div>
                     </div>
@@ -121,18 +142,12 @@ class VehicleInfo extends React.Component {
                         </div>
                         <div>
                             <Typography variant='h4'>
-                                lorem
+                                {this.numberToDollarValue(purchasePrice)}
                             </Typography>
                         </div>
                     </div>
                     <div className='Vehicle-flexItemContainer'>
-                        <Button
-                            variant="raised"
-                            color="primary"
-                            size='medium'
-                            >
-                            <p className='VehicleInfo-buttonText'>Edit Pricing Information</p>
-                        </Button>   
+                        <VehicleInfoDialog />
                     </div>
                 </div>
             </div>

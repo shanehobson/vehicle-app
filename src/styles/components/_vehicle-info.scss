@@ -1,0 +1,17 @@
+.Vehicle-container {
+    display: flex;
+    justify-content: space-between;
+}
+.VehicleInfo-itemContainer {
+    margin-bottom: 2rem;
+}
+.Vehicle-flexItemContainer {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.VehicleInfo-buttonText {
+    font-size: 1.6rem;
+  }
+  

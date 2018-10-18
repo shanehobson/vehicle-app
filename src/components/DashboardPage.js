@@ -1,8 +1,13 @@
 import React from 'react';
+import NavBar from './NavBar';
+import VehicleInfo from './VehicleInfo';
 
 const DashboardPage = () => (
   <div>
-    Dashboard page content
+    <NavBar />
+    <div className='content-container'>
+      <VehicleInfo />
+    </div>
   </div>
 );
 

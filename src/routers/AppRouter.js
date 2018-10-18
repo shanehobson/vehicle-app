@@ -9,7 +9,7 @@ export const history = createHistory();
 class AppRouter extends Component {
 
   componentDidMount() {
-    document.title = "Vehicle Information";
+    document.title = "Vehicle Information Dashboard";
   }
 
   render() {

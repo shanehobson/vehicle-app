@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import { startSetVehicleInfo } from '../actions/vehicle';
 
 class FormDialog extends React.Component {
     constructor(props) {
@@ -20,8 +22,8 @@ class FormDialog extends React.Component {
         }
     }
 
-  componentWillReceiveProps() {
-    const { msrp, rebate, discount, purchasePrice } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { msrp, rebate, discount, purchasePrice } = nextProps;
     this.setState(() => ({
         msrp, 
         rebate, 
@@ -38,6 +40,13 @@ class FormDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  handlePostPricingData = () => {
+      const { msrp, discount, rebate, purchasePrice } = this.state;
+      console.log(msrp);
+      this.setState({ open: false });
+      this.props.startSetVehicleInfo({ msrp, discount, rebate, purchasePrice });
+  }
 
   dollarValueToNumber = (val) => {
     let newVal = val.slice(1);
@@ -142,7 +151,7 @@ class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handlePostPricingData} color="primary">
               Submit
             </Button>
           </DialogActions>
@@ -152,4 +161,8 @@ class FormDialog extends React.Component {
   }
 }
 
-export default FormDialog;
+const mapDispatchToProps = (dispatch, props) => ({
+    startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo))
+});
+
+export default connect(undefined, mapDispatchToProps)(FormDialog);

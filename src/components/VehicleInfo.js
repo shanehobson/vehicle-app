@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import VehicleInfoDialog from './VehicleInfoDialog';
+import { getVehicleInfo } from '../actions/vehicle';
 import { setVehicleInfo } from '../actions/vehicle';
 
 class VehicleInfo extends React.Component {
@@ -11,47 +12,72 @@ class VehicleInfo extends React.Component {
         super(props);
         this.state = {
             year: '',
-            make: '',
-            model: '',
-            vin: '',
-            modelNumber: '',
-            msrp: '',
-            discount: '',
-            rebate: '',
-            purchasePrice: ''
+            make: this.props.make,
+            model: this.props.model,
+            vin: this.props.vin,
+            modelNumber: this.props.modelNumber,
+            msrp: this.props.msrp,
+            discount: this.props.discount,
+            rebate: this.props.rebate,
+            purchasePrice: this.props.purchasePrice
         }
     }
 
     componentDidMount() {
-        this.getVehicleInfo();
+        this.props.getVehicleInfo();
+        this.setState(() => ({
+            year: this.props.year,
+            make: this.props.make,
+            model: this.props.model,
+            vin: this.props.vin,
+            modelNumber: this.props.modelNumber,
+            msrp: this.props.msrp,
+            discount: this.props.discount,
+            rebate: this.props.rebate,
+            purchasePrice: this.props.purchasePrice
+        }));
     }
 
-    getVehicleInfo = () => {
-        fetch('https://clearpathpro.io:9060/getVehicleInformation?userId=hobsonShane')
-            .then((response) => {
-                console.log(response)
-                return response.json();
-            })
-            .then((jsonData) => {
-                const { vehicleYear, vehicleMake, vehicleModel, vin, modelNumber } = jsonData.vehicleInfo;
-                const { rebate, msrp, discount, purchasePrice} = jsonData.vehiclePricing;
-                this.setState(() => ({
-                    year: vehicleYear,
-                    make: vehicleMake,
-                    model: vehicleModel,
-                    vin,
-                    modelNumber,
-                    msrp,
-                    discount,
-                    rebate,
-                    purchasePrice
-                }))
-                return jsonData;
-            })
-            .then((jsonData) => {
-                this.setVehicleInfo();
-            });
+    componentWillReceiveProps(nextProps) {
+        this.setState(() => ({
+            year: nextProps.year,
+            make: nextProps.make,
+            model: nextProps.model,
+            vin: nextProps.vin,
+            modelNumber: nextProps.modelNumber,
+            msrp: nextProps.msrp,
+            discount: nextProps.discount,
+            rebate: nextProps.rebate,
+            purchasePrice: nextProps.purchasePrice
+        }));
     }
+
+    // getVehicleInfo = () => {
+    //     fetch('https://clearpathpro.io:9060/getVehicleInformation?userId=hobsonShane')
+    //         .then((response) => {
+    //             console.log(response)
+    //             return response.json();
+    //         })
+    //         .then((jsonData) => {
+    //             const { vehicleYear, vehicleMake, vehicleModel, vin, modelNumber } = jsonData.vehicleInfo;
+    //             const { rebate, msrp, discount, purchasePrice} = jsonData.vehiclePricing;
+    //             this.setState(() => ({
+    //                 year: vehicleYear,
+    //                 make: vehicleMake,
+    //                 model: vehicleModel,
+    //                 vin,
+    //                 modelNumber,
+    //                 msrp,
+    //                 discount,
+    //                 rebate,
+    //                 purchasePrice
+    //             }))
+    //             return jsonData;
+    //         })
+    //         .then((jsonData) => {
+    //             this.setVehicleInfo();
+    //         });
+    // }
 
     setVehicleInfo = () => {
         const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
@@ -59,6 +85,10 @@ class VehicleInfo extends React.Component {
             year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice
         });
     }
+
+    // postNewPricingData = (pricingInfo) => {
+    //     console.log('Pricing Info: ', ...pricingInfo);
+    // }
 
     numberToDollarValue = (number) => {
         let input = number.toString();
@@ -73,6 +103,7 @@ class VehicleInfo extends React.Component {
 
     render() {
         const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
+        console.log(this.props);
         return (
             <div className='Vehicle-container'>
                 <div className='Vehicle-leftPane'>
@@ -169,6 +200,7 @@ class VehicleInfo extends React.Component {
                             rebate={rebate}
                             purchasePrice={purchasePrice}
                             numberToDollarValue={this.numberToDollarValue}
+                            postNewPricingData={this.postNewPricingData}
                         />
                     </div>
                 </div>
@@ -190,6 +222,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
+    getVehicleInfo: () => dispatch(getVehicleInfo()),
     setVehicleInfo: (vehicleInfo) => dispatch(setVehicleInfo(vehicleInfo))
 });
 

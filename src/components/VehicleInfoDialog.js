@@ -9,9 +9,27 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 
 class FormDialog extends React.Component {
-  state = {
-    open: false,
-  };
+    constructor(props) {
+        super(props)
+        this.state = {
+            open: false,
+            msrp: '',
+            rebate: '',
+            discount: '',
+            purchasePrice: ''
+        }
+    }
+
+  componentWillReceiveProps() {
+    const { msrp, rebate, discount, purchasePrice } = this.props;
+    this.setState(() => ({
+        msrp, 
+        rebate, 
+        discount, 
+        purchasePrice
+    }));
+    console.log(this.state);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -21,8 +39,45 @@ class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  dollarValueToNumber = (val) => {
+    let newVal = val.slice(1);
+    if (newVal.length > 3) {
+        return newVal.replace(',', '');
+    }
+    return newVal;
+  }
+
+  updateMsrp = (e) => {
+      let thisVal = this.dollarValueToNumber(e.target.value);
+      this.setState(() => ({
+        msrp: thisVal
+    }));
+  }
+
+  updateDiscount = (e) => {
+        let thisVal = this.dollarValueToNumber(e.target.value);
+        this.setState(() => ({
+        discount: thisVal
+    }));
+  }
+
+  updateRebate = (e) => {
+        let thisVal = this.dollarValueToNumber(e.target.value);
+        this.setState(() => ({
+        rebate: thisVal
+    }));
+  }
+
+  updatePurchasePrice = (e) => {
+        let thisVal = this.dollarValueToNumber(e.target.value);
+        this.setState(() => ({
+        purchasePrice: thisVal
+    }));
+  }
+
   render() {
-    const { msrp, rebate, discount, purchasePrice, numberToDollarValue } = this.props;
+    const { numberToDollarValue } = this.props;
+    const { msrp, rebate, discount, purchasePrice } = this.state;
     return (
       <div>
         <Button
@@ -47,40 +102,40 @@ class FormDialog extends React.Component {
                 Edit any of the fields below that you wish to change, and click "Submit" when done.
             </Typography>
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="MSRP"
               type="text"
               fullWidth
               value={numberToDollarValue(msrp)}
+              onChange={this.updateMsrp}
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Discount"
                 type="text"
                 fullWidth
                 value={numberToDollarValue(discount)}
+                onChange={this.updateDiscount}
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Rebate"
                 type="text"
                 fullWidth
                 value={numberToDollarValue(rebate)}
+                onChange={this.updateRebate}
             />
             <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Purchase Price"
                 type="text"
                 fullWidth
                 value={numberToDollarValue(purchasePrice)}
+                onChange={this.updatePurchasePrice}
             />
           </DialogContent>
           <DialogActions>

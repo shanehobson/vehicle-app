@@ -13,5 +13,12 @@
 }
 .VehicleInfo-buttonText {
     font-size: 1.6rem;
-  }
+}
+
+@media only screen and (max-width: $desktop-breakpoint) {
+    .Vehicle-container {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+}
   

@@ -10,9 +10,13 @@ const NavBar = () => {
         <div className='NavBar-navBar'>
             <AppBar position='static'>
                 <Toolbar>
-                    <Typography variant='title' color='inherit' className='NavBar-flex'>
-                        <p className='Navbar-navBarText'>Vehicle Information Dashboard</p>
-                    </Typography>
+                    <div className='NavBar-textContainer'>
+                        <div>
+                            <Typography variant='h3' color='inherit'>
+                                <p className='Navbar-navBarText'>Vehicle Information Dashboard</p>
+                            </Typography>
+                        </div>
+                    </div>
                 </Toolbar>
             </AppBar>
         </div>

@@ -11,7 +11,7 @@ class VehicleInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: '',
+            year: this.props.year,
             make: this.props.make,
             model: this.props.model,
             vin: this.props.vin,
@@ -52,43 +52,12 @@ class VehicleInfo extends React.Component {
         }));
     }
 
-    // getVehicleInfo = () => {
-    //     fetch('https://clearpathpro.io:9060/getVehicleInformation?userId=hobsonShane')
-    //         .then((response) => {
-    //             console.log(response)
-    //             return response.json();
-    //         })
-    //         .then((jsonData) => {
-    //             const { vehicleYear, vehicleMake, vehicleModel, vin, modelNumber } = jsonData.vehicleInfo;
-    //             const { rebate, msrp, discount, purchasePrice} = jsonData.vehiclePricing;
-    //             this.setState(() => ({
-    //                 year: vehicleYear,
-    //                 make: vehicleMake,
-    //                 model: vehicleModel,
-    //                 vin,
-    //                 modelNumber,
-    //                 msrp,
-    //                 discount,
-    //                 rebate,
-    //                 purchasePrice
-    //             }))
-    //             return jsonData;
-    //         })
-    //         .then((jsonData) => {
-    //             this.setVehicleInfo();
-    //         });
-    // }
-
     setVehicleInfo = () => {
         const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
         this.props.setVehicleInfo({
             year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice
         });
     }
-
-    // postNewPricingData = (pricingInfo) => {
-    //     console.log('Pricing Info: ', ...pricingInfo);
-    // }
 
     numberToDollarValue = (number) => {
         let input = number.toString();
@@ -103,7 +72,6 @@ class VehicleInfo extends React.Component {
 
     render() {
         const { year, make, model, vin, modelNumber, msrp, discount, rebate, purchasePrice } = this.state;
-        console.log(this.props);
         return (
             <div className='Vehicle-container'>
                 <div className='Vehicle-leftPane'>

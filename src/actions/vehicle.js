@@ -7,13 +7,11 @@ export const getVehicleInfo = () => {
     return (dispatch) => {
         fetch('https://clearpathpro.io:9060/getVehicleInformation?userId=hobsonShane')
         .then((response) => {
-            console.log(response)
             return response.json();
         })
         .then((jsonData) => {
             const { vehicleYear, vehicleMake, vehicleModel, vin, modelNumber } = jsonData.vehicleInfo;
             const { rebate, msrp, discount, purchasePrice} = jsonData.vehiclePricing;
-            console.log(vehicleYear, vehicleMake, vehicleModel);
             dispatch(setVehicleInfo({
                 year: vehicleYear,
                 make: vehicleMake,
@@ -30,7 +28,6 @@ export const getVehicleInfo = () => {
 }
 
 export const startSetVehicleInfo = (vehicleInfo = {}) => {
-    console.log('Entered startSetVehicleInfo action generator')
     return (dispatch) => {
         const {
             msrp,

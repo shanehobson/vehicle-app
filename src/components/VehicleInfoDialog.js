@@ -2,13 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import { startSetVehicleInfo } from '../actions/vehicle';
+
+const styles = {
+    root: {
+      fontSize: 20,
+      marginBottom: 20
+    },
+  };
+  
 
 class FormDialog extends React.Component {
     constructor(props) {
@@ -30,7 +40,6 @@ class FormDialog extends React.Component {
         discount, 
         purchasePrice
     }));
-    console.log(this.state);
   }
 
   handleClickOpen = () => {
@@ -43,7 +52,6 @@ class FormDialog extends React.Component {
 
   handlePostPricingData = () => {
       const { msrp, discount, rebate, purchasePrice } = this.state;
-      console.log(msrp);
       this.setState({ open: false });
       this.props.startSetVehicleInfo({ msrp, discount, rebate, purchasePrice });
   }
@@ -105,21 +113,35 @@ class FormDialog extends React.Component {
           <DialogTitle
             id="form-dialog-title"
           >
-          Edit Pricing Information</DialogTitle>
+          Edit Pricing Information
+          </DialogTitle>
           <DialogContent>
-            <Typography variant='h6'>
-                Edit any of the fields below that you wish to change, and click "Submit" when done.
+            <Typography
+                variant="h4"
+                id="form-dialog-title"
+                color="primary"
+            >
+            MSRP
             </Typography>
-            <TextField
+            <Input
               margin="dense"
+              autoFocus={true}
               id="name"
               label="MSRP"
               type="text"
               fullWidth
               value={numberToDollarValue(msrp)}
               onChange={this.updateMsrp}
+              className={this.props.classes.root}
             />
-            <TextField
+            <Typography
+                variant="h4"
+                id="form-dialog-title"
+                color="primary"
+            >
+            Discount
+            </Typography>
+            <Input
                 margin="dense"
                 id="name"
                 label="Discount"
@@ -127,8 +149,16 @@ class FormDialog extends React.Component {
                 fullWidth
                 value={numberToDollarValue(discount)}
                 onChange={this.updateDiscount}
+                className={this.props.classes.root}
             />
-            <TextField
+            <Typography
+                variant="h4"
+                id="form-dialog-title"
+                color="primary"
+            >
+            Rebate
+            </Typography>
+            <Input
                 margin="dense"
                 id="name"
                 label="Rebate"
@@ -136,8 +166,16 @@ class FormDialog extends React.Component {
                 fullWidth
                 value={numberToDollarValue(rebate)}
                 onChange={this.updateRebate}
+                className={this.props.classes.root}
             />
-            <TextField
+            <Typography
+                variant="h4"
+                id="form-dialog-title"
+                color="primary"
+            >
+            Purchase Price
+            </Typography>
+            <Input
                 margin="dense"
                 id="name"
                 label="Purchase Price"
@@ -145,6 +183,7 @@ class FormDialog extends React.Component {
                 fullWidth
                 value={numberToDollarValue(purchasePrice)}
                 onChange={this.updatePurchasePrice}
+                className={this.props.classes.root}
             />
           </DialogContent>
           <DialogActions>
@@ -165,4 +204,4 @@ const mapDispatchToProps = (dispatch, props) => ({
     startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo))
 });
 
-export default connect(undefined, mapDispatchToProps)(FormDialog);
+export default withStyles(styles)(connect(undefined, mapDispatchToProps)(FormDialog));

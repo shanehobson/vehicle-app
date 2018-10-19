@@ -47,7 +47,13 @@ class FormDialog extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ 
+        open: false,
+        msrp: this.props.msrp,
+        rebate: this.props.rebate,
+        discount: this.props.discount,
+        purchasePrice: this.props.purchasePrice
+    });
   };
 
   handlePostPricingData = () => {
@@ -64,15 +70,22 @@ class FormDialog extends React.Component {
     return newVal;
   }
 
+  isNumber = (value) => {
+    let reg = /^\d+$/;
+    return value.match(reg);
+  }
+
   updateMsrp = (e) => {
-      let thisVal = this.dollarValueToNumber(e.target.value);
-      this.setState(() => ({
-        msrp: thisVal
-    }));
+        let thisVal = this.dollarValueToNumber(e.target.value);
+        if (!this.isNumber(thisVal)) return;
+        this.setState(() => ({
+          msrp: thisVal
+      }));
   }
 
   updateDiscount = (e) => {
         let thisVal = this.dollarValueToNumber(e.target.value);
+        if (!this.isNumber(thisVal)) return;
         this.setState(() => ({
         discount: thisVal
     }));
@@ -80,6 +93,7 @@ class FormDialog extends React.Component {
 
   updateRebate = (e) => {
         let thisVal = this.dollarValueToNumber(e.target.value);
+        if (!this.isNumber(thisVal)) return;
         this.setState(() => ({
         rebate: thisVal
     }));
@@ -87,6 +101,7 @@ class FormDialog extends React.Component {
 
   updatePurchasePrice = (e) => {
         let thisVal = this.dollarValueToNumber(e.target.value);
+        if (!this.isNumber(thisVal)) return;
         this.setState(() => ({
         purchasePrice: thisVal
     }));

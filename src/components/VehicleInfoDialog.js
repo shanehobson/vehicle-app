@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { startSetVehicleInfo } from '../actions/vehicle';
+import { setIsLoading } from '../actions/isLoading';
 
 const styles = {
     root: {
@@ -59,7 +60,9 @@ class FormDialog extends React.Component {
   handlePostPricingData = () => {
       const { msrp, discount, rebate, purchasePrice } = this.state;
       this.setState({ open: false });
+      this.props.setIsLoading(true);
       this.props.startSetVehicleInfo({ msrp, discount, rebate, purchasePrice });
+      this.props.setIsLoading(false);
   }
 
   dollarValueToNumber = (val) => {
@@ -111,112 +114,113 @@ class FormDialog extends React.Component {
     const { numberToDollarValue } = this.props;
     const { msrp, rebate, discount, purchasePrice } = this.state;
     return (
-      <div>
-        <Button
-            variant="contained"
-            color="primary"
-            size='medium'
-            onClick={this.handleClickOpen}
-            >
-            <p className='VehicleInfo-buttonText'>Edit Pricing Information</p>
-        </Button>   
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle
-            id="form-dialog-title"
-          >
-          Edit Pricing Information
-          </DialogTitle>
-          <DialogContent>
-            <Typography
-                variant="h4"
-                id="form-dialog-title"
+        <div>
+            <Button
+                variant="contained"
                 color="primary"
+                size='medium'
+                onClick={this.handleClickOpen}
+                >
+                <p className='VehicleInfo-buttonText'>Edit Pricing Information</p>
+            </Button>   
+            <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="form-dialog-title"
             >
-            MSRP
-            </Typography>
-            <Input
-              margin="dense"
-              autoFocus={true}
-              id="name"
-              label="MSRP"
-              type="text"
-              fullWidth
-              value={numberToDollarValue(msrp)}
-              onChange={this.updateMsrp}
-              className={this.props.classes.root}
-            />
-            <Typography
-                variant="h4"
+            <DialogTitle
                 id="form-dialog-title"
-                color="primary"
             >
-            Discount
-            </Typography>
-            <Input
+            Edit Pricing Information
+            </DialogTitle>
+            <DialogContent>
+                <Typography
+                    variant="h4"
+                    id="form-dialog-title"
+                    color="primary"
+                >
+                MSRP
+                </Typography>
+                <Input
                 margin="dense"
+                autoFocus={true}
                 id="name"
-                label="Discount"
+                label="MSRP"
                 type="text"
                 fullWidth
-                value={numberToDollarValue(discount)}
-                onChange={this.updateDiscount}
+                value={numberToDollarValue(msrp)}
+                onChange={this.updateMsrp}
                 className={this.props.classes.root}
-            />
-            <Typography
-                variant="h4"
-                id="form-dialog-title"
-                color="primary"
-            >
-            Rebate
-            </Typography>
-            <Input
-                margin="dense"
-                id="name"
-                label="Rebate"
-                type="text"
-                fullWidth
-                value={numberToDollarValue(rebate)}
-                onChange={this.updateRebate}
-                className={this.props.classes.root}
-            />
-            <Typography
-                variant="h4"
-                id="form-dialog-title"
-                color="primary"
-            >
-            Purchase Price
-            </Typography>
-            <Input
-                margin="dense"
-                id="name"
-                label="Purchase Price"
-                type="text"
-                fullWidth
-                value={numberToDollarValue(purchasePrice)}
-                onChange={this.updatePurchasePrice}
-                className={this.props.classes.root}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handlePostPricingData} color="primary">
-              Submit
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+                />
+                <Typography
+                    variant="h4"
+                    id="form-dialog-title"
+                    color="primary"
+                >
+                Discount
+                </Typography>
+                <Input
+                    margin="dense"
+                    id="name"
+                    label="Discount"
+                    type="text"
+                    fullWidth
+                    value={numberToDollarValue(discount)}
+                    onChange={this.updateDiscount}
+                    className={this.props.classes.root}
+                />
+                <Typography
+                    variant="h4"
+                    id="form-dialog-title"
+                    color="primary"
+                >
+                Rebate
+                </Typography>
+                <Input
+                    margin="dense"
+                    id="name"
+                    label="Rebate"
+                    type="text"
+                    fullWidth
+                    value={numberToDollarValue(rebate)}
+                    onChange={this.updateRebate}
+                    className={this.props.classes.root}
+                />
+                <Typography
+                    variant="h4"
+                    id="form-dialog-title"
+                    color="primary"
+                >
+                Purchase Price
+                </Typography>
+                <Input
+                    margin="dense"
+                    id="name"
+                    label="Purchase Price"
+                    type="text"
+                    fullWidth
+                    value={numberToDollarValue(purchasePrice)}
+                    onChange={this.updatePurchasePrice}
+                    className={this.props.classes.root}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={this.handleClose} color="primary">
+                Cancel
+                </Button>
+                <Button onClick={this.handlePostPricingData} color="primary">
+                Submit
+                </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => ({
-    startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo))
+    startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo)),
+    setIsLoading: (isLoading) => dispatch(setIsLoading(isLoading))
 });
 
 export default withStyles(styles)(connect(undefined, mapDispatchToProps)(FormDialog));

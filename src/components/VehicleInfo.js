@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import VehicleInfoDialog from './VehicleInfoDialog';
 import { getVehicleInfo } from '../actions/vehicle';
 import { setVehicleInfo } from '../actions/vehicle';
+import { setIsLoading } from '../actions/isLoading';
 
 class VehicleInfo extends React.Component {
     constructor(props) {
@@ -24,7 +25,6 @@ class VehicleInfo extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getVehicleInfo();
         this.setState(() => ({
             year: this.props.year,
             make: this.props.make,
@@ -82,7 +82,7 @@ class VehicleInfo extends React.Component {
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 VIN:
                             </Typography>
                         </div>
@@ -94,7 +94,7 @@ class VehicleInfo extends React.Component {
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 Model Number:
                             </Typography>
                         </div>
@@ -108,14 +108,14 @@ class VehicleInfo extends React.Component {
                 <div className='Vehicle-RightPane'>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display2' color='primary'>
+                            <Typography variant='h4' color='primary'>
                                 Pricing Information
                             </Typography>
                         </div>
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 MSRP:
                             </Typography>
                         </div>
@@ -127,7 +127,7 @@ class VehicleInfo extends React.Component {
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 Discount:
                             </Typography>
                         </div>
@@ -139,7 +139,7 @@ class VehicleInfo extends React.Component {
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 Rebate:
                             </Typography>
                         </div>
@@ -151,7 +151,7 @@ class VehicleInfo extends React.Component {
                     </div>
                     <div className='Vehicle-flexItemContainer'>
                         <div>
-                            <Typography variant='display1'>
+                            <Typography variant='h4' color='textSecondary'>
                                 Purchase Price:
                             </Typography>
                         </div>
@@ -190,7 +190,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    getVehicleInfo: () => dispatch(getVehicleInfo()),
     setVehicleInfo: (vehicleInfo) => dispatch(setVehicleInfo(vehicleInfo))
 });
 

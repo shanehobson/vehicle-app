@@ -1,12 +1,12 @@
 const isLoadingDefaultState = {
-    isLoading: false
+    isLoading: true
 };
 
 const isLoadingReducer = (state = isLoadingDefaultState, action) => {
     switch(action.type) {
         case 'SET_IS_LOADING':
             return {
-                isLoading
+                isLoading: action.isLoading
             };
         default:
             return state;

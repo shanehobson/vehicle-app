@@ -11,6 +11,13 @@
     justify-content: space-between;
     align-items: center;
 }
+.Vehicle-dialogButtonContainer {
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .Vehicle-RightPane {
     padding-top: 1rem;
 }
@@ -22,6 +29,9 @@
     .Vehicle-container {
         flex-direction: column;
         justify-content: flex-start;
+    }
+    .Vehicle-dialogButtonContainer {
+        padding-top: 2rem;
     }
 }
   

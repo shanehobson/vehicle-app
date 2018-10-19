@@ -161,7 +161,7 @@ class VehicleInfo extends React.Component {
                             </Typography>
                         </div>
                     </div>
-                    <div className='Vehicle-flexItemContainer'>
+                    <div className='Vehicle-dialogButtonContainer'>
                         <VehicleInfoDialog
                             msrp={msrp}
                             discount={discount}

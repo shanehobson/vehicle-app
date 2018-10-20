@@ -23,7 +23,8 @@ export const getVehicleInfo = () => {
                 discount,
                 purchasePrice 
             }));
-        });
+        })
+        .catch((e) => console.log(e));
     }
 }
 
@@ -51,10 +52,10 @@ export const startSetVehicleInfo = (vehicleInfo = {}) => {
         })
         .then((result) => {
             dispatch(setVehicleInfo({
-                msrp,
-                discount, 
-                rebate, 
-                purchasePrice
+                msrp: parseInt(msrp),
+                discount: parseInt(discount),
+                rebate: parseInt(rebate), 
+                purchasePrice: parseInt(purchasePrice)
             }))
         })
         .catch((e) => console.log(e));

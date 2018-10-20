@@ -76,7 +76,7 @@ class VehicleInfo extends React.Component {
             <div className='Vehicle-container'>
                 <div className='Vehicle-leftPane'>
                     <div className='Vehicle-flexItemContainer'>
-                        <Typography variant='display3' color='primary'>
+                        <Typography variant='h2' color='primary'>
                             {year} {make} {model}
                         </Typography>
                     </div>
@@ -176,6 +176,19 @@ class VehicleInfo extends React.Component {
         )
     }
 }
+
+VehicleInfo.propTypes = {
+    year: PropTypes.string.isRequired,
+    make: PropTypes.string.isRequired,
+    model: PropTypes.string.isRequired,
+    vin: PropTypes.string.isRequired,
+    modelNumber: PropTypes.string.isRequired,
+    msrp: PropTypes.number.isRequired,
+    discount: PropTypes.number.isRequired,
+    rebate: PropTypes.number.isRequired,
+    purchasePrice: PropTypes.number.isRequired,
+    setVehicleInfo: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     year: state.vehicleInfo.year,

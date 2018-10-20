@@ -4,10 +4,10 @@ const vehicleInfoDefaultState = {
     model: '',
     vin: '',
     modelNumber: '',
-    msrp: '',
-    discount: '',
-    rebate: '',
-    purchasePrice: ''
+    msrp: 0,
+    discount: 0,
+    rebate: 0,
+    purchasePrice: 0
 };
 
 const vehicleInfoReducer = (state = vehicleInfoDefaultState, action) => {

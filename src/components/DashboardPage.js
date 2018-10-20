@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 import VehicleInfo from './VehicleInfo';
 import LoadingPage from './LoadingPage';
@@ -30,9 +31,12 @@ class DashboardPage extends React.Component {
   }
 }
 
+DashboardPage.propTypes = {
+  setIsLoading: PropTypes.func.isRequired
+};
+
 const mapStateToProps = (state) => ({
-  isLoading: state.isLoading.isLoading,
-  msrp: state.vehicleInfo.msrp
+  isLoading: state.isLoading.isLoading
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

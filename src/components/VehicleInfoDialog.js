@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
@@ -21,7 +22,7 @@ const styles = {
   };
   
 
-class FormDialog extends React.Component {
+class VehicleInfoDialog extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -205,7 +206,10 @@ class FormDialog extends React.Component {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={this.handleClose} color="primary">
+                <Button
+                    onClick={this.handleClose}
+                    color="primary"
+                >
                 Cancel
                 </Button>
                 <Button onClick={this.handlePostPricingData} color="primary">
@@ -218,9 +222,14 @@ class FormDialog extends React.Component {
   }
 }
 
+VehicleInfoDialog.propTypes = {
+    startSetVehicleInfo: PropTypes.func.isRequired,
+    setIsLoading: PropTypes.func.isRequired
+  };
+
 const mapDispatchToProps = (dispatch, props) => ({
     startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo)),
     setIsLoading: (isLoading) => dispatch(setIsLoading(isLoading))
 });
 
-export default withStyles(styles)(connect(undefined, mapDispatchToProps)(FormDialog));
+export default withStyles(styles)(connect(undefined, mapDispatchToProps)(VehicleInfoDialog));

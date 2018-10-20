@@ -86,6 +86,7 @@ class VehicleInfoDialog extends React.Component {
     }
 
     isNumber = (value) => {
+        if (value === '') return true;
         let reg = /^\d+$/;
         return value.match(reg);
     }

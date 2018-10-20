@@ -65,6 +65,8 @@ class VehicleInfo extends React.Component {
             let start = input.slice(0, input.length - 3);
             let end = input.slice(input.length - 3);
             return '$' + start + ',' + end;
+        } else if (input.length === 0) {
+            return '$';
         } else {
             return '$' + input;
         }

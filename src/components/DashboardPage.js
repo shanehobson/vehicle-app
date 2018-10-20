@@ -5,7 +5,7 @@ import NavBar from './NavBar';
 import VehicleInfo from './VehicleInfo';
 import LoadingPage from './LoadingPage';
 import { getVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/isLoading';
+import { setIsLoading } from '../actions/vehicle';
 
 class DashboardPage extends React.Component {
   
@@ -36,7 +36,7 @@ DashboardPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isLoading: state.isLoading.isLoading
+  isLoading: state.vehicleInfo.isLoading
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

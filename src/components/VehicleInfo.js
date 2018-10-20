@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import VehicleInfoDialog from './VehicleInfoDialog';
 import { getVehicleInfo } from '../actions/vehicle';
 import { setVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/isLoading';
+import { setIsLoading } from '../actions/vehicle';
 
 class VehicleInfo extends React.Component {
     constructor(props) {

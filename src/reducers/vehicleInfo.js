@@ -7,7 +7,8 @@ const vehicleInfoDefaultState = {
     msrp: 0,
     discount: 0,
     rebate: 0,
-    purchasePrice: 0
+    purchasePrice: 0,
+    isLoading: true
 };
 
 const vehicleInfoReducer = (state = vehicleInfoDefaultState, action) => {
@@ -16,6 +17,11 @@ const vehicleInfoReducer = (state = vehicleInfoDefaultState, action) => {
             return {
                 ...state,
                 ...action.vehicleInfo
+            };
+        case 'SET_IS_LOADING':
+            return {
+                ...state,
+                ...action.isLoading
             };
         default:
             return state;

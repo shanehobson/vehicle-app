@@ -12,7 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { startSetVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/isLoading';
+import { setIsLoading } from '../actions/vehicle';
 
 const styles = {
     root: {
@@ -33,193 +33,202 @@ class VehicleInfoDialog extends React.Component {
             purchasePrice: ''
         }
     }
+    componentDidMount() {
+        const { msrp, rebate, discount, purchasePrice } = this.props;
+        this.setState(() => ({
+            msrp, 
+            rebate, 
+            discount, 
+            purchasePrice
+        }));
+        }
 
-  componentWillReceiveProps(nextProps) {
-    const { msrp, rebate, discount, purchasePrice } = nextProps;
-    this.setState(() => ({
-        msrp, 
-        rebate, 
-        discount, 
-        purchasePrice
-    }));
-  }
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ 
-        open: false,
-        msrp: this.props.msrp,
-        rebate: this.props.rebate,
-        discount: this.props.discount,
-        purchasePrice: this.props.purchasePrice
-    });
-  };
-
-  handlePostPricingData = () => {
-      const { msrp, discount, rebate, purchasePrice } = this.state;
-      this.setState({ open: false });
-      this.props.setIsLoading(true);
-      this.props.startSetVehicleInfo({ msrp, discount, rebate, purchasePrice });
-      this.props.setIsLoading(false);
-  }
-
-  dollarValueToNumber = (val) => {
-    let newVal = val.slice(1);
-    if (newVal.length > 3) {
-        return newVal.replace(',', '');
+    componentWillReceiveProps(nextProps) {
+        const { msrp, rebate, discount, purchasePrice } = nextProps;
+        this.setState(() => ({
+            msrp, 
+            rebate, 
+            discount, 
+            purchasePrice
+        }));
     }
-    return newVal;
-  }
 
-  isNumber = (value) => {
-    let reg = /^\d+$/;
-    return value.match(reg);
-  }
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
 
-  updateMsrp = (e) => {
-        let thisVal = this.dollarValueToNumber(e.target.value);
-        if (!this.isNumber(thisVal)) return;
-        this.setState(() => ({
-          msrp: thisVal
-      }));
-  }
+    handleClose = () => {
+        this.setState({ 
+            open: false,
+            msrp: this.props.msrp,
+            rebate: this.props.rebate,
+            discount: this.props.discount,
+            purchasePrice: this.props.purchasePrice
+        });
+    };
 
-  updateDiscount = (e) => {
-        let thisVal = this.dollarValueToNumber(e.target.value);
-        if (!this.isNumber(thisVal)) return;
-        this.setState(() => ({
-        discount: thisVal
-    }));
-  }
+    handlePostPricingData = () => {
+        const { msrp, discount, rebate, purchasePrice } = this.state;
+        this.setState({ open: false });
+        this.props.setIsLoading(true);
+        this.props.startSetVehicleInfo({ msrp, discount, rebate, purchasePrice });
+        this.props.setIsLoading(false);
+    }
 
-  updateRebate = (e) => {
-        let thisVal = this.dollarValueToNumber(e.target.value);
-        if (!this.isNumber(thisVal)) return;
-        this.setState(() => ({
-        rebate: thisVal
-    }));
-  }
+    dollarValueToNumber = (val) => {
+        let newVal = val.slice(1);
+        if (newVal.length > 3) {
+            return newVal.replace(',', '');
+        }
+        return newVal;
+    }
 
-  updatePurchasePrice = (e) => {
-        let thisVal = this.dollarValueToNumber(e.target.value);
-        if (!this.isNumber(thisVal)) return;
-        this.setState(() => ({
-        purchasePrice: thisVal
-    }));
-  }
+    isNumber = (value) => {
+        let reg = /^\d+$/;
+        return value.match(reg);
+    }
 
-  render() {
-    const { numberToDollarValue } = this.props;
-    const { msrp, rebate, discount, purchasePrice } = this.state;
-    return (
-        <div>
-            <Button
-                variant="contained"
-                color="primary"
-                size='medium'
-                onClick={this.handleClickOpen}
-                >
-                <p className='VehicleInfo-buttonText'>Edit Pricing Information</p>
-            </Button>   
-            <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            aria-labelledby="form-dialog-title"
-            >
-            <DialogTitle
-                id="form-dialog-title"
-            >
-            Edit Pricing Information
-            </DialogTitle>
-            <DialogContent>
-                <Typography
-                    variant="h4"
-                    id="form-dialog-title"
-                    color="primary"
-                >
-                MSRP
-                </Typography>
-                <Input
-                margin="dense"
-                autoFocus={true}
-                id="name"
-                label="MSRP"
-                type="text"
-                fullWidth
-                value={numberToDollarValue(msrp)}
-                onChange={this.updateMsrp}
-                className={this.props.classes.root}
-                />
-                <Typography
-                    variant="h4"
-                    id="form-dialog-title"
-                    color="primary"
-                >
-                Discount
-                </Typography>
-                <Input
-                    margin="dense"
-                    id="name"
-                    label="Discount"
-                    type="text"
-                    fullWidth
-                    value={numberToDollarValue(discount)}
-                    onChange={this.updateDiscount}
-                    className={this.props.classes.root}
-                />
-                <Typography
-                    variant="h4"
-                    id="form-dialog-title"
-                    color="primary"
-                >
-                Rebate
-                </Typography>
-                <Input
-                    margin="dense"
-                    id="name"
-                    label="Rebate"
-                    type="text"
-                    fullWidth
-                    value={numberToDollarValue(rebate)}
-                    onChange={this.updateRebate}
-                    className={this.props.classes.root}
-                />
-                <Typography
-                    variant="h4"
-                    id="form-dialog-title"
-                    color="primary"
-                >
-                Purchase Price
-                </Typography>
-                <Input
-                    margin="dense"
-                    id="name"
-                    label="Purchase Price"
-                    type="text"
-                    fullWidth
-                    value={numberToDollarValue(purchasePrice)}
-                    onChange={this.updatePurchasePrice}
-                    className={this.props.classes.root}
-                />
-            </DialogContent>
-            <DialogActions>
+    updateMsrp = (e) => {
+            let thisVal = this.dollarValueToNumber(e.target.value);
+            if (!this.isNumber(thisVal)) return;
+            this.setState(() => ({
+            msrp: thisVal
+        }));
+    }
+
+    updateDiscount = (e) => {
+            let thisVal = this.dollarValueToNumber(e.target.value);
+            if (!this.isNumber(thisVal)) return;
+            this.setState(() => ({
+            discount: thisVal
+        }));
+    }
+
+    updateRebate = (e) => {
+            let thisVal = this.dollarValueToNumber(e.target.value);
+            if (!this.isNumber(thisVal)) return;
+            this.setState(() => ({
+            rebate: thisVal
+        }));
+    }
+
+    updatePurchasePrice = (e) => {
+            let thisVal = this.dollarValueToNumber(e.target.value);
+            if (!this.isNumber(thisVal)) return;
+            this.setState(() => ({
+            purchasePrice: thisVal
+        }));
+    }
+
+    render() {
+        const { numberToDollarValue } = this.props;
+        const { msrp, rebate, discount, purchasePrice } = this.state;
+        return (
+            <div>
                 <Button
-                    onClick={this.handleClose}
+                    variant="contained"
                     color="primary"
+                    size='medium'
+                    onClick={this.handleClickOpen}
+                    >
+                    <p className='VehicleInfo-buttonText'>Edit Pricing Information</p>
+                </Button>   
+                <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
                 >
-                Cancel
-                </Button>
-                <Button onClick={this.handlePostPricingData} color="primary">
-                Submit
-                </Button>
-            </DialogActions>
-            </Dialog>
-        </div>
-    );
-  }
+                <DialogTitle
+                    id="form-dialog-title"
+                >
+                Edit Pricing Information
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        variant="h4"
+                        id="form-dialog-title"
+                        color="primary"
+                    >
+                    MSRP
+                    </Typography>
+                    <Input
+                    margin="dense"
+                    autoFocus={true}
+                    id="name"
+                    label="MSRP"
+                    type="text"
+                    fullWidth
+                    value={numberToDollarValue(msrp)}
+                    onChange={this.updateMsrp}
+                    className={this.props.classes.root}
+                    />
+                    <Typography
+                        variant="h4"
+                        id="form-dialog-title"
+                        color="primary"
+                    >
+                    Discount
+                    </Typography>
+                    <Input
+                        margin="dense"
+                        id="name"
+                        label="Discount"
+                        type="text"
+                        fullWidth
+                        value={numberToDollarValue(discount)}
+                        onChange={this.updateDiscount}
+                        className={this.props.classes.root}
+                    />
+                    <Typography
+                        variant="h4"
+                        id="form-dialog-title"
+                        color="primary"
+                    >
+                    Rebate
+                    </Typography>
+                    <Input
+                        margin="dense"
+                        id="name"
+                        label="Rebate"
+                        type="text"
+                        fullWidth
+                        value={numberToDollarValue(rebate)}
+                        onChange={this.updateRebate}
+                        className={this.props.classes.root}
+                    />
+                    <Typography
+                        variant="h4"
+                        id="form-dialog-title"
+                        color="primary"
+                    >
+                    Purchase Price
+                    </Typography>
+                    <Input
+                        margin="dense"
+                        id="name"
+                        label="Purchase Price"
+                        type="text"
+                        fullWidth
+                        value={numberToDollarValue(purchasePrice)}
+                        onChange={this.updatePurchasePrice}
+                        className={this.props.classes.root}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={this.handleClose}
+                        color="primary"
+                    >
+                    Cancel
+                    </Button>
+                    <Button onClick={this.handlePostPricingData} color="primary">
+                    Submit
+                    </Button>
+                </DialogActions>
+                </Dialog>
+            </div>
+        );
+    }
 }
 
 VehicleInfoDialog.propTypes = {

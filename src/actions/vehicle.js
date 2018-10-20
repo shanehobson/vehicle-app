@@ -21,7 +21,8 @@ export const getVehicleInfo = () => {
                 rebate,
                 msrp,
                 discount,
-                purchasePrice 
+                purchasePrice,
+                isLoading: false
             }));
         })
         .catch((e) => console.log(e));
@@ -55,9 +56,15 @@ export const startSetVehicleInfo = (vehicleInfo = {}) => {
                 msrp: parseInt(msrp),
                 discount: parseInt(discount),
                 rebate: parseInt(rebate), 
-                purchasePrice: parseInt(purchasePrice)
+                purchasePrice: parseInt(purchasePrice),
+                isLoading: false
             }))
         })
         .catch((e) => console.log(e));
     }  
 }
+
+export const setIsLoading = (isLoading) => ({
+    type: 'SET_IS_LOADING',
+    isLoading
+});

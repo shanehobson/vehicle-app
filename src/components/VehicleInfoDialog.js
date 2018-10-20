@@ -92,8 +92,8 @@ class VehicleInfoDialog extends React.Component {
     }
 
     updateMsrp = (e) => {
-            let thisVal = this.dollarValueToNumber(e.target.value);
-            if (!this.isNumber(thisVal)) return;
+        let thisVal = this.dollarValueToNumber(e.target.value);
+        if (!this.isNumber(thisVal)) return;
             this.setState(() => ({
             msrp: thisVal
         }));
@@ -157,7 +157,7 @@ class VehicleInfoDialog extends React.Component {
                     <Input
                     margin="dense"
                     autoFocus={true}
-                    id="name"
+                    id="msrp"
                     label="MSRP"
                     type="text"
                     fullWidth
@@ -178,6 +178,7 @@ class VehicleInfoDialog extends React.Component {
                         label="Discount"
                         type="text"
                         fullWidth
+
                         value={numberToDollarValue(discount)}
                         onChange={this.updateDiscount}
                         className={this.props.classes.root}
@@ -240,9 +241,9 @@ VehicleInfoDialog.propTypes = {
     isLoading: PropTypes.bool.isRequired
   };
 
-  const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
     isLoading: state.vehicleInfo.isLoading
-  });
+});
 
 const mapDispatchToProps = (dispatch, props) => ({
     startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo)),

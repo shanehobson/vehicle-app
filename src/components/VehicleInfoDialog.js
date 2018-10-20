@@ -44,13 +44,15 @@ class VehicleInfoDialog extends React.Component {
         }
 
     componentWillReceiveProps(nextProps) {
+        if (!this.props.isLoading) {
+            this.setState(() => ({
+                msrp, 
+                rebate, 
+                discount, 
+                purchasePrice
+            }));
+        }
         const { msrp, rebate, discount, purchasePrice } = nextProps;
-        this.setState(() => ({
-            msrp, 
-            rebate, 
-            discount, 
-            purchasePrice
-        }));
     }
 
     handleClickOpen = () => {
@@ -233,12 +235,17 @@ class VehicleInfoDialog extends React.Component {
 
 VehicleInfoDialog.propTypes = {
     startSetVehicleInfo: PropTypes.func.isRequired,
-    setIsLoading: PropTypes.func.isRequired
+    setIsLoading: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired
   };
+
+  const mapStateToProps = (state) => ({
+    isLoading: state.vehicleInfo.isLoading
+  });
 
 const mapDispatchToProps = (dispatch, props) => ({
     startSetVehicleInfo: (vehicleInfo) => dispatch(startSetVehicleInfo(vehicleInfo)),
     setIsLoading: (isLoading) => dispatch(setIsLoading(isLoading))
 });
 
-export default withStyles(styles)(connect(undefined, mapDispatchToProps)(VehicleInfoDialog));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(VehicleInfoDialog));

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import VehicleInfoDialog from './VehicleInfoDialog';
-import { getVehicleInfo } from '../actions/vehicle';
-import { setVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/vehicle';
+import { getVehicleInfo } from '../actions/vehicleInfo';
+import { setVehicleInfo } from '../actions/vehicleInfo';
+import { setIsLoading } from '../actions/vehicleInfo';
 
 class VehicleInfo extends React.Component {
     constructor(props) {

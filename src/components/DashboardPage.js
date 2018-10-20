@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 import VehicleInfo from './VehicleInfo';
 import LoadingPage from './LoadingPage';
-import { getVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/vehicle';
+import { getVehicleInfo } from '../actions/vehicleInfo';
+import { setIsLoading } from '../actions/vehicleInfo';
 
 class DashboardPage extends React.Component {
   
@@ -32,7 +32,9 @@ class DashboardPage extends React.Component {
 }
 
 DashboardPage.propTypes = {
-  setIsLoading: PropTypes.func.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
+  getVehicleInfo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,8 +10,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { startSetVehicleInfo } from '../actions/vehicle';
-import { setIsLoading } from '../actions/vehicle';
+import { startSetVehicleInfo } from '../actions/vehicleInfo';
+import { setIsLoading } from '../actions/vehicleInfo';
 
 const styles = {
     root: {
@@ -33,6 +32,7 @@ class VehicleInfoDialog extends React.Component {
             purchasePrice: ''
         }
     }
+
     componentDidMount() {
         const { msrp, rebate, discount, purchasePrice } = this.props;
         this.setState(() => ({
@@ -41,10 +41,11 @@ class VehicleInfoDialog extends React.Component {
             discount, 
             purchasePrice
         }));
-        }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.isLoading) {
+            const { msrp, rebate, discount, purchasePrice } = nextProps;
             this.setState(() => ({
                 msrp, 
                 rebate, 
@@ -52,7 +53,6 @@ class VehicleInfoDialog extends React.Component {
                 purchasePrice
             }));
         }
-        const { msrp, rebate, discount, purchasePrice } = nextProps;
     }
 
     handleClickOpen = () => {

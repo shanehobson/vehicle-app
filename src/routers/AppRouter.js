@@ -1,12 +1,11 @@
 import React from 'react';
-import { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import Dashboard from '../components/DashboardPage';
 
 export const history = createHistory();
 
-class AppRouter extends Component {
+class AppRouter extends React.Component {
 
   componentDidMount() {
     document.title = "Vehicle Information Dashboard";

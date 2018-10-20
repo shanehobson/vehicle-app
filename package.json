@@ -27,7 +27,6 @@
     "history": "4.7.2",
     "node-sass": "4.5.3",
     "normalize.css": "7.0.0",
-    "numeral": "2.0.6",
     "react": "^16.3.0",
     "react-color": "^2.14.1",
     "react-dom": "^16.3.0",
@@ -38,7 +37,6 @@
     "redux-thunk": "2.2.0",
     "sass-loader": "6.0.6",
     "style-loader": "0.18.2",
-    "validator": "8.0.0",
     "webpack": "3.1.0"
   },
   "devDependencies": {

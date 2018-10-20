@@ -76,7 +76,7 @@ class VehicleInfo extends React.Component {
             <div className='Vehicle-container'>
                 <div className='Vehicle-leftPane'>
                     <div className='Vehicle-flexItemContainer'>
-                        <Typography variant='h2' color='primary'>
+                        <Typography variant='h3' color='primary'>
                             {year} {make} {model}
                         </Typography>
                     </div>

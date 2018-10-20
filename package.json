@@ -4,12 +4,15 @@
   "main": "index.js",
   "author": "Shane Hobson",
   "license": "",
+  "engines": {
+    "node": "8.11.2"
+  },
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "start": "node server.js",
-    "heroku-postbuild": "yarn run build:prod"
+    "heroku-postbuild": "npm run build:prod"
   },
   "dependencies": {
     "@material-ui/core": "^3.2.2",
